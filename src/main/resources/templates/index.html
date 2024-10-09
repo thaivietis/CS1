@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="ABC Group" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $("#locales").change(function () {
+                var selectedOption = $("#locales").val();
+                if(selectedOption !== ''){
+                    window.location.replace('/?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
+</head>
+
+<body class="sb-nav-fixed">
+    <div class="container-fluid">
+        <h1 class="title text-center" th:text="#{title}"></h1>
+        <span th:text="#{lang.change}"></span>
+        <label for="locales"></label>
+        <select id="locales">
+            <option value=""></option>
+            <option value="en" th:text="#{lang.en}"></option>
+            <option value="vi" th:text="#{lang.vi}"></option>
+        </select>
+        <table class="table table-hover table-responsive-xl">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col" th:text="#{name}"></th>
+                <th scope="col" th:text="#{avatar}"></th>
+                <th scope="col" th:text="#{department}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="e : ${employeeInfomation}">
+                <td th:text="${e.fullName}"></td>
+                <td>
+                    <img style="max-height: 200px;" th:src="@{'/images/avatar/' + ${e.avatar} + '?v=' + ${e.avatar}}" alt="avatar" />
+                </td>
+                <td th:text="${e.department == null ? '': e.department.name}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script th:src="@{js/scripts.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script th:src="@{assets/demo/chart-area-demo.js}"></script>
+<script th:src="@{assets/demo/chart-bar-demo.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+<script th:src="@{js/datatables-simple-demo.js}"></script>
+</body>
+
+</html>
