@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
-    Employee findById(int id);
+
+    @Override
+    boolean existsById(Integer id);
+
     Employee findByEmployeeId(String code);
     List<Employee> findAll();
     @Query("SELECT new com.nqt.cs1.dto.EmployeeInfomationDTO(" +

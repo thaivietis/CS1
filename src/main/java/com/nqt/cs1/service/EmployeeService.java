@@ -2,42 +2,20 @@ package com.nqt.cs1.service;
 
 import com.nqt.cs1.domain.Employee;
 import com.nqt.cs1.dto.EmployeeInfomationDTO;
-import com.nqt.cs1.repository.EmployeeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class EmployeeService extends RuntimeException{
-    @Autowired
-    private EmployeeRepository employeeRepository;
+public interface EmployeeService {
+    List<Employee> getAllEmployees() ;
 
-    public List<Employee> getAllEmployees() {
-        return employeeRepository.findAll();
-    }
+    Employee saveEmployee(Employee employee);
 
-    public Employee saveEmployee(Employee employee) {
-        return this.employeeRepository.save(employee);
-    }
+    Employee findById(int id);
 
-    public Employee findById(int id) {
-        Employee employee = this.employeeRepository.findById(id);
-        if (id != 0) {
-            System.out.println("Employee not found with id: " + id);
-        }
-        return employee;
-    }
+    void deleteEmployee(int id);
 
-    public void deleteEmployee(int id) {
-        this.employeeRepository.deleteById(id);
-    }
+    Employee findByEmployeeId(String employeeId);
 
-    public Employee findByEmployeeId(String employeeId) {
-        return this.employeeRepository.findByEmployeeId(employeeId);
-    }
-
-    public List<EmployeeInfomationDTO> getEmployeeInfomation() {
-        return this.employeeRepository.getEmployeeInfomation();
-    }
+    List<EmployeeInfomationDTO> getEmployeeInfomation();
 }

@@ -28,8 +28,27 @@
 </head>
 
 <body class="sb-nav-fixed">
-    <div class="container-fluid">
-        <h1 class="title text-center" th:text="#{title}"></h1>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand title" th:href="@{/}">ABC Group</a>
+
+            <!-- Button toggler for mobile view -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible part of the navbar -->
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <!-- Add 'ms-auto' class to push login button to the right -->
+                <div class="d-flex ms-auto">
+                    <a class="btn btn-outline-success" th:href="@{/login}" th:text="#{login}"></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
         <span th:text="#{lang.change}"></span>
         <label for="locales"></label>
         <select id="locales">
@@ -37,7 +56,8 @@
             <option value="en" th:text="#{lang.en}"></option>
             <option value="vi" th:text="#{lang.vi}"></option>
         </select>
-        <table class="table table-hover table-responsive-xl">
+        <h1 class="title text-center" th:text="#{title}"></h1>
+        <table class="table">
             <thead class="thead-light">
             <tr>
                 <th scope="col" th:text="#{name}"></th>
@@ -49,7 +69,7 @@
             <tr th:each="e : ${employeeInfomation}">
                 <td th:text="${e.fullName}"></td>
                 <td>
-                    <img style="max-height: 200px;" th:src="@{'/images/avatar/' + ${e.avatar} + '?v=' + ${e.avatar}}" alt="avatar" />
+                    <img style="height: 200px; width: 150px;" th:src="@{'/images/avatar/' + ${e.avatar} + '?v=' + ${e.avatar}}" alt="avatar" />
                 </td>
                 <td th:text="${e.department == null ? '': e.department.name}"></td>
             </tr>

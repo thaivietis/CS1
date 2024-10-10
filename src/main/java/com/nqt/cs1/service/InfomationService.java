@@ -8,27 +8,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class InfomationService {
-    @Autowired
-    private InfomationRepository informationRepository;
+public interface InfomationService {
 
-    public List<Infomation> getAll(){
-        return this.informationRepository.findAll();
-    }
+    List<Infomation> getAll();
 
-    public Infomation getById(int id){
-        return this.informationRepository.findById(id);
-    }
+    Infomation getById(int id);
 
-    public Infomation saveInformation(Infomation information){
-        return this.informationRepository.save(information);
-    }
+    Infomation saveInformation(Infomation information);
 
-    public void deleteById(int id){
-        this.informationRepository.deleteById(id);
-    }
+    void deleteById(int id);
 
-    public Infomation findById(int id){
-        return this.informationRepository.findById(id);
-    }
+    Infomation findById(int id);
 }

@@ -9,29 +9,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Slf4j
-@Service
-public class DepartmentService {
-    @Autowired
-    private DepartmentRepository departmentRepository;
+public interface DepartmentService {
+    Department getDepartmentById(int id);
 
-    public Department getDepartmentById(int id){
-        return this.departmentRepository.findById(id);
-    }
+    Department saveDepartment(Department department);
 
-    public Department saveDepartment(Department department){
-        return this.departmentRepository.save(department);
-    }
+    List<Department> getAll();
 
-    public List<Department> getAll(){
-        return this.departmentRepository.findAll();
-    }
+    void deleteById(int id);
 
-    public void deleteById(int id){
-        this.departmentRepository.deleteById(id);
-    }
-
-    public List<DepartmentInformationDTO> getDepartmentInfomation(){
-        return this.departmentRepository.getDepartmentInfomation();
-    }
+    List<DepartmentInformationDTO> getDepartmentInfomation();
 }
