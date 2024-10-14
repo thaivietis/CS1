@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -23,15 +24,22 @@ public class SpringSecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public AuthenticationSuccessHandler customSuccessHandler() {
         return new CustomSuccessHandler();
     }
 
     @Bean
     public DaoAuthenticationProvider authProvider(
+            PasswordEncoder passwordEncoder,
             UserDetailsService userDetailsService) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 
@@ -57,6 +65,7 @@ public class SpringSecurityConfig {
                                 new AntPathRequestMatcher("/images/**"),
                                 new AntPathRequestMatcher("/assets/**"),
                                 new AntPathRequestMatcher("/js/**"),
+                                new AntPathRequestMatcher("/user/**"),
                                 new AntPathRequestMatcher("/auth/**")).permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/**"),
@@ -69,13 +78,5 @@ public class SpringSecurityConfig {
                                 new AntPathRequestMatcher("/infomation/**")).hasRole("USER")
                         .anyRequest().authenticated());
         return http.build();
-    }
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService(){
-        return new InMemoryUserDetailsManager(
-                User.withUsername("admin@gmail.com").password("{noop}123456").roles("ADMIN").build(),
-                User.withUsername("user1@gmail.com").password("{noop}123456").roles("USER").build(),
-                User.withUsername("user2@gmail.com").password("{noop}123456").roles("USER").build());
     }
 }

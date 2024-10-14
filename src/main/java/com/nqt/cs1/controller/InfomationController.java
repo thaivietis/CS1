@@ -42,18 +42,13 @@ public class InfomationController {
         return "redirect:/infomation";
     }
 
-    @GetMapping("/infomation/detail")
-    public String DetailInformation(Model model){
-        return "infomation/detail";
-    }
-
     @GetMapping("/infomation/update/{id}")
-    public String UpdateInformation(Model model, @PathVariable("id") int id){
+    public String updateInformation(Model model, @PathVariable("id") int id){
         Infomation infomation = this.infomationService.getById(id);
         String rewardType = infomation.getType();
         model.addAttribute("information", infomation);
         model.addAttribute("rewardType", rewardType);
-        return "information/update";
+        return "infomation/update";
     }
 
     @PostMapping("/infomation/update")
@@ -64,7 +59,7 @@ public class InfomationController {
         information.setDate(newInformation.getDate());
         information.setReason(newInformation.getReason());
         this.infomationService.saveInformation(information);
-        return "infomation/show";
+        return "redirect:/infomation";
     }
 
     @GetMapping("/infomation/delete/{id}")

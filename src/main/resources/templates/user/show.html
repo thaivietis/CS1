@@ -27,7 +27,7 @@
         <div class="my-3">
           <div class="row d-flex justify-content-end">
             <div class="col-md-4 mt-2">
-              <a class="btn btn-info" >Thêm mới</a>
+              <a class="btn btn-info" th:href="@{/user/create}">Thêm mới</a>
             </div>
           </div>
         </div>
@@ -37,23 +37,17 @@
             <tr>
               <th scope="col">Email</th>
               <th scope="col">Mật khẩu</th>
-              <th scope="col">Loại</th>
-              <th scope="col">Ngày ghi nhận</th>
-              <th scope="col">Lý do</th>
               <th scope="col">Hành động</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="information : ${informations}">
-              <td th:text="${information.employee.employeeId}"></td>
-              <td th:text="${information.employee.fullName}"></td>
-              <td th:text="${information.type}"></td>
-              <td th:text="${information.date}"></td>
-              <td th:text="${information.reason}"></td>
+            <tr th:each="user : ${users}">
+              <td th:text="${user.username}"></td>
+              <td th:text="${user.password}"></td>
               <td>
-                <a title="Edit" th:href="@{/infomation/update/{id}(id=${information.id})}">Sửa</a>
+                <a title="Edit" th:href="@{/user/update/{id}(id=${user.id})}">Sửa</a>
                 &nbsp;
-                <a id="btnDelete" title="Delete" th:href="@{/infomation/delete/{id}(id=${information.id})}">Xóa</a>
+                <a id="btnDelete" title="Delete" th:href="@{/user/delete/{id}(id=${user.id})}">Xóa</a>
               </td>
             </tr>
             </tbody>

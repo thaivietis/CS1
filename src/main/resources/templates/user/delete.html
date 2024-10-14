@@ -24,17 +24,17 @@
           <li class="breadcrumb-item"><a th:href="@{/}">Dashboard</a></li>
           <li class="breadcrumb-item active">User</li>
         </ol>
-        <form action="#" th:action="@{/infomation/delete}" th:method="POST">
+        <form action="#" th:action="@{/user/delete}" th:method="POST">
           <div class="row mt-3 " style="display: none;">
-            <input type="text" class="form-control" name="id" th:value="${infomation.id}"/>
+            <input type="text" class="form-control" name="id" th:value="${user.get().id}"/>
           </div>
           <div class="card">
             <div class="card-body">
-              Bạn có chắc chắn muốn xóa nhân viên này không?
+              Bạn có chắc chắn muốn xóa tài khoản này không?
             </div>
           </div>
           <div class="d-flex justify-content-end mt-3">
-            <a class="btn btn-warning mx-2" th:href="@{/infomation}">Hủy</a>
+            <a class="btn btn-warning mx-2" th:href="@{/user}">Hủy</a>
             <button class="btn btn-primary" type="submit">Đồng ý</button>
           </div>
         </form>

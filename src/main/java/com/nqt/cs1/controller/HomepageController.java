@@ -3,11 +3,16 @@ package com.nqt.cs1.controller;
 import com.nqt.cs1.domain.Department;
 import com.nqt.cs1.domain.Employee;
 import com.nqt.cs1.domain.Infomation;
+import com.nqt.cs1.domain.User;
 import com.nqt.cs1.dto.DepartmentInformationDTO;
 import com.nqt.cs1.dto.EmployeeInfomationDTO;
 import com.nqt.cs1.service.DepartmentService;
 import com.nqt.cs1.service.EmployeeService;
 import com.nqt.cs1.service.InfomationService;
+import com.nqt.cs1.service.imp.DepartmentServiceImp;
+import com.nqt.cs1.service.imp.EmployeeServiceImp;
+import com.nqt.cs1.service.imp.InfomationServiceImp;
+import com.nqt.cs1.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +26,16 @@ import java.util.stream.Collectors;
 @Controller
 public class HomepageController {
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeServiceImp employeeService;
 
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentServiceImp departmentService;
 
     @Autowired
-    private InfomationService infomationService;
+    private InfomationServiceImp infomationService;
+
+    @Autowired
+    private UserServiceImp userService;
 
     @GetMapping(value = "/")
     public String getClien(Model model) {
@@ -52,7 +60,9 @@ public class HomepageController {
     }
 
     @GetMapping(value = "/user")
-    public String getUser() {
+    public String getUser(Model model) {
+        List<User> users = this.userService.getAllUsers();
+        model.addAttribute("users", users);
         return "user/show";
     }
 
@@ -60,7 +70,6 @@ public class HomepageController {
     public String getEmployee(Model model) {
         List<Employee> employees = employeeService.getAllEmployees();
         model.addAttribute("employees", employees);
-        System.out.println(employees);
         return "employee/show";
     }
 

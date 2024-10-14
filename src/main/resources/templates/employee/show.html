@@ -67,8 +67,6 @@
                             </td>
                             <td th:text="${employee.department == null ? '': employee.department.name}"></td>
                             <td>
-                                <a title="Detail" th:href="@{/employee/detail/{id}(id = ${employee.id})}">Chi tiết</a>
-                                &nbsp;
                                 <a title="Edit" th:href="@{/employee/update/{id}(id = ${employee.id})}">Sửa</a>
                                 &nbsp;
                                 <a id="btnDelete" title="Delete" th:href="@{/employee/delete/{id}(id = ${employee.id})}">Xóa</a>

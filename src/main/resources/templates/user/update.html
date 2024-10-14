@@ -24,76 +24,30 @@
                     <li class="breadcrumb-item"><a th:href="@{/}">Dashboard</a></li>
                     <li class="breadcrumb-item active">User</li>
                 </ol>
-                <form action="#" th:action="@{/employee/update}" method="POST" enctype="multipart/form-data">
+                <form action="#" th:action="@{/user/update}" method="POST" enctype="multipart/form-data">
                     <div class="row mt-3 " style="display: none;">
-                        <input th:value="${employee.id}" type="text" class="form-control" name="id"/>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Mã nhân viên</label>
-                        <input th:value="${employee.employeeId}" type="text" class="form-control" placeholder="Mã nhân viên" aria-label="EmployeeId" name="employeeId"/>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Tên nhân viên</label>
-                        <input th:value="${employee.fullName}" type="text" class="form-control" placeholder="Họ và tên" aria-label="Employee" name="fullName"/>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Giới tính</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="gender">
-                            <option disabled selected>Giới tính</option>
-                            <option value="1" th:selected="${gender1 == '1'}">Nam</option>
-                            <option value="2" th:selected="${gender1 == '2'}">Nữ</option>
-                        </select>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Ngày sinh</label>
-                        <input type="date" th:value="${employee.dateOfBirth}" class="form-control" placeholder="Ngày sinh" aria-label="DateOfBirth" name="dateOfBirth"/>
+                        <input th:value="${user.id}" type="text" class="form-control" name="id"/>
                     </div>
                     <div class="row mt-3">
                         <label>Email</label>
-                        <input type="email" th:value="${employee.email}" class="form-control" placeholder="Email" aria-label="Email" name="email"/>
+                        <input type="email" th:value="${user.username}" class="form-control" placeholder="Email" name="username"/>
                     </div>
                     <div class="row mt-3">
-                        <label>Số điện thoại</label>
-                        <input type="text" th:value="${employee.phone}" class="form-control" placeholder="Số điện thoại" aria-label="phone" name="phone"/>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Lương</label>
-                        <input type="text" th:value="${employee.salary}" class="form-control" placeholder="Lương" aria-label="Salary" name="salary"/>
-                    </div>
-                    <div class="row mt-3">
-                        <label for="avatarFile" class="form-label">Hình ảnh</label>
-                        <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg" name="avatarFile"/>
-                    </div>
-                    <div class="col-12 mb-3 mt-3">
-                        <img style="max-height: 250px;" alt="avatar preview" id="avatarPreview" th:src="@{'/images/avatar/' + ${employee.avatar}}"/>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Ghi chú</label>
-                        <textarea type="text" th:text="${employee.description}" class="form-control" placeholder="Nội dung" aria-label="Description" name="description"></textarea>
-                    </div>
-                    <div class="row mt-3">
-                        <label>Cấp độ</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="level">
-                            <option disabled selected>Cấp độ</option>
-                            <option th:each="i : ${#numbers.sequence(1, 10)}"
-                                    th:value="${i}"
-                                    th:text="${i}"
-                                    th:selected="${i == employee.level}">
-                            </option>
-                        </select>
+                        <label>Mật khẩu</label>
+                        <input type="password" th:value="${user.password}" class="form-control" placeholder="Mật khẩu" name="password"/>
                     </div>
                     <div class="row mt-3">
                         <label>Phòng ban</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="department">
-                            <option disabled selected>Phòng ban</option>
-                            <option th:each="department : ${departmentList}"
-                                    th:value="${department.id}"
-                                    th:text="${department.name}"
-                                    th:selected="${department.name == employee.department.name}"></option>
+                        <select class="form-select form-select-sm" aria-label="form-select-sm example" name="role">
+                            <option disabled selected>Quyền hạn</option>
+                            <option th:each="role : ${roles}"
+                                    th:value="${role.id}"
+                                    th:text="${role.name}"
+                                    th:selected="${role.name == user.role.name}"></option>
                         </select>
                     </div>
                     <div class="d-flex justify-content-end mt-3">
-                        <a class="btn btn-warning mx-2" th:href="@{/employee}">Hủy</a>
+                        <a class="btn btn-warning mx-2" th:href="@{/user}">Hủy</a>
                         <button class="btn btn-primary" type="submit">Lưu</button>
                     </div>
                 </form>

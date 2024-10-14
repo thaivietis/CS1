@@ -24,17 +24,26 @@
                     <li class="breadcrumb-item"><a th:href="@{/}">Dashboard</a></li>
                     <li class="breadcrumb-item active">User</li>
                 </ol>
-                <form action="#" th:action="@{/department/create}" th:method="post" th:modelAttribute="${newDepartment}" th:multiple="text">
+                <form action="#" th:action="@{/user/create}" th:method="post">
                     <div class="row">
-                        <label>Tên phòng ban</label>
-                        <input type="text" class="form-control" placeholder="Họ và tên" aria-label="Username" aria-describedby="addon-wrapping" name="name"/>
+                        <label>Tài khoản</label>
+                        <input type="text" class="form-control" placeholder="Email" aria-label="Username" name="username"/>
                     </div>
                     <div class="row mt-3">
-                        <label>Mô tả</label>
-                        <textarea type="text" class="form-control" placeholder="Mô tả" aria-label="description" name="depertmentId"></textarea>
+                        <label>Mật khẩu</label>
+                        <input type="password" class="form-control" placeholder="Mật khẩu" aria-label="description" name="password"></input>
+                    </div>
+                    <div class="row mt-3">
+                        <label>Phòng ban</label>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="role">
+                            <option disabled selected>Quyền hạn</option>
+                            <option th:each="role : ${roles}"
+                                    th:value="${role.id}"
+                                    th:text="${role.name}"></option>
+                        </select>
                     </div>
                     <div class="d-flex justify-content-end mt-3">
-                        <a class="btn btn-warning mx-2" th:href="@{/department}">Hủy</a>
+                        <a class="btn btn-warning mx-2" th:href="@{/user}">Hủy</a>
                         <button class="btn btn-primary" type="submit">Lưu</button>
                     </div>
                 </form>

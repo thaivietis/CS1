@@ -26,11 +26,6 @@ public class DepartmentController {
         return "redirect:/department";
     }
 
-    @GetMapping("/department/detail/{id}")
-    public String DetailDepartment(Model model){
-        return "department/detail";
-    }
-
     @GetMapping("/department/update/{id}")
     public String UpdateDepartment(Model model, @PathVariable("id") int id){
         Department department = this.departmentService.getDepartmentById(id);

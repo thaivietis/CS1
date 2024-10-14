@@ -50,8 +50,6 @@
               <td th:text="${department.name}"></td>
               <td  th:text="${department.depertmentId}"></td>
               <td>
-                <a title="Detail" th:href="@{/department/detai/{id}(id=${department.id})}">Chi tiết</a>
-                &nbsp;
                 <a title="Edit" th:href="@{/department/update/{id}(id=${department.id})}">Sửa</a>
                 &nbsp;
                 <a id="btnDelete" title="Delete" th:href="@{/department/delete/{id}(id=${department.id})}">Xóa</a>
