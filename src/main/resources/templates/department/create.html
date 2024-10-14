@@ -27,7 +27,10 @@
         <form action="#" th:action="@{/department/create}" th:method="post" th:modelAttribute="${newDepartment}" th:multiple="text">
           <div class="row">
             <label>Tên phòng ban</label>
-            <input type="text" class="form-control" placeholder="Họ và tên" aria-label="Username" aria-describedby="addon-wrapping" name="name"/>
+            <input th:field="*{name}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" type="text" class="form-control" placeholder="Họ và tên" aria-label="Username" aria-describedby="addon-wrapping" name="name"/>
+            <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+              <span th:errors="*{name}"></span>
+            </div>
           </div>
           <div class="row mt-3">
             <label>Mô tả</label>

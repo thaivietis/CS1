@@ -2,9 +2,11 @@ package com.nqt.cs1.controller;
 
 import com.nqt.cs1.domain.Department;
 import com.nqt.cs1.service.DepartmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,10 @@ public class DepartmentController {
     }
 
     @PostMapping("/department/create")
-    public String PostCreateDepartment(@ModelAttribute Department newDepartment){
+    public String PostCreateDepartment(@ModelAttribute @Valid Department newDepartment, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "department/create";
+        }
         this.departmentService.saveDepartment(newDepartment);
         return "redirect:/department";
     }

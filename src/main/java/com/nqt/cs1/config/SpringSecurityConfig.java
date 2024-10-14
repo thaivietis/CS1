@@ -65,12 +65,12 @@ public class SpringSecurityConfig {
                                 new AntPathRequestMatcher("/images/**"),
                                 new AntPathRequestMatcher("/assets/**"),
                                 new AntPathRequestMatcher("/js/**"),
-                                new AntPathRequestMatcher("/user/**"),
                                 new AntPathRequestMatcher("/auth/**")).permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/**"),
                                 new AntPathRequestMatcher("/department/**"),
                                 new AntPathRequestMatcher("/infomation/**"),
+                                new AntPathRequestMatcher("/user/**"),
                                 new AntPathRequestMatcher("/employee/**")).hasRole("ADMIN")
                         .requestMatchers(
                                 new AntPathRequestMatcher("/department/**"),
