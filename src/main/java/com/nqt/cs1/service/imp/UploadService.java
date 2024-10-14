@@ -1,12 +1,10 @@
-package com.nqt.cs1.service;
+package com.nqt.cs1.service.imp;
 
 import jakarta.servlet.ServletContext;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
@@ -40,7 +38,6 @@ public class UploadService {
             stream.write(bytes);
             stream.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return finalName;

@@ -24,14 +24,10 @@ public class EmployeeServiceImp implements EmployeeService {
             if (employees == null) {
                 throw new RuntimeException("No employees found.");
             }
-
             return employees;
         } catch (DataAccessException e) {
             // Ném lại ngoại lệ truy vấn cơ sở dữ liệu
             throw new RuntimeException("Error accessing the database: " + e.getMessage(), e);
-        } catch (Exception e) {
-            // Ném lại các ngoại lệ chung khác
-            throw new RuntimeException("Unexpected error occurred: " + e.getMessage(), e);
         }
     }
 

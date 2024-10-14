@@ -4,7 +4,7 @@ import com.nqt.cs1.domain.Department;
 import com.nqt.cs1.domain.Employee;
 import com.nqt.cs1.service.DepartmentService;
 import com.nqt.cs1.service.EmployeeService;
-import com.nqt.cs1.service.UploadService;
+import com.nqt.cs1.service.imp.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

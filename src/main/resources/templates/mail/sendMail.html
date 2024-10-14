@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Send HTML Email</title>
+</head>
+<body>
+<div>
+    <h3>Send Email Using Text Template</h3>
+    <form method="POST" >
+        <fieldset>
+            <div style="width: 100%;max-width: 1280px">
+                <table>
+                    <tr>
+                        <th><label for="input_to">Recipient email</label></th>
+                        <td><input path="to" id="input_to" type="email"/>
+                            <small>Enter email address</small><br/>
+                            <errors path="to" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_recipient_name">Recipient name</label></th>
+                        <td><input path="recipientName" id="input_recipient_name"/>
+                            <small>Enter the recipient name</small><br/>
+                            <errors path="recipientName" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_subject">Subject</label></th>
+                        <td><input path="subject" id="input_subject"/>
+                            <small>Enter the subject</small><br/>
+                            <errors path="subject" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_text">Text</label></th>
+                        <td><textarea path="text"
+                                           rows="5" cols="50"
+                                           id="input_text"></textarea>
+                            <errors path="text" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_sender_name">Sender name</label></th>
+                        <td><input path="senderName" id="input_sender_name"/>
+                            <small>Enter the sender name</small><br/>
+                            <errors path="senderName" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_template_engine">Template Engine</label></th>
+                        <td><select path="templateEngine" id="input_template_engine"></select>
+                            <small>Select the template engine</small><br/>
+                            <errors path="templateEngine" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input type="submit" value="Send">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

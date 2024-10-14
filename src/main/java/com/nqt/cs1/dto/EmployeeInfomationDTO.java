@@ -15,4 +15,7 @@ public class EmployeeInfomationDTO {
     private long pointDisciplinary;
     private long total;
     private Department department;
+
+    public EmployeeInfomationDTO(String john, String developer) {
+    }
 }

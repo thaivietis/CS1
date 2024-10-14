@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Send Email</title>
+</head>
+<body>
+<div>
+    <h3></h3>
+    <form method="POST" >
+        <fieldset>
+            <div style="float:left;">
+                <table cellspacing="0" width="300">
+                    <tr>
+                        <th><label for="input_to">To</label></th>
+                        <td><input path="to" id="input_to" type="email"/>
+                            <small>Enter email address</small><br/>
+                            <errors path="to" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_subject">Subject</label></th>
+                        <td><input path="subject" id="input_subject"/>
+                            <small>Enter the subject</small><br/>
+                            <errors path="subject" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="input_text"></label></th>
+                        <td><textarea path="text"
+                                           rows="5" cols="50"
+                                           id="input_text"></textarea>
+                            <errors path="text" cssStyle="color:red;font-size:small"></errors>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            <input type="submit" value="Send">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float:left; word-wrap: break-word; margin-left: 50px; width: 400px; color: grey">
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

@@ -87,4 +87,14 @@ public class HomepageController {
     public String postLogin(){
         return "auth/erorr";
     }
+
+    @GetMapping(value = "/send-mail")
+    public String sendMail(){
+        return "mail/sendMail";
+    }
+
+    @GetMapping(value = "/send")
+    public String send(){
+        return "mail/send";
+    }
 }
