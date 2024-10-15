@@ -1,9 +1,7 @@
 package com.nqt.cs1.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private int id;
 
     @NotNull
@@ -24,7 +21,7 @@ public class User {
     private String username;
 
     @NotNull
-    @Size(min = 8, max = 20)
+    @Min(8)
     private String password;
 
     @NotNull

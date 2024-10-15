@@ -22,10 +22,9 @@ public class Role {
     private int id;
     @OneToMany(mappedBy = "role")
     @ToString.Exclude
-    @NotNull
     private List<User> users;
     @NotNull
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 100)
     private String name;
     @Column(columnDefinition = "MEDIUMTEXT")
     private String description;
