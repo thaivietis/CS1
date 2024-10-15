@@ -16,15 +16,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
-    @Email
+    @NotBlank(message = "Không được để trống")
+    @Email(message = "Tài khoản không chính xác")
     private String username;
 
-    @NotNull
-    @Min(8)
+    @NotBlank(message = "Không được để trống")
+    @Min(value = 8, message = "Tài khoản không chính xác")
     private String password;
 
-    @NotNull
+    @NotBlank(message = "Không được để trống")
     @ManyToOne
     @JoinColumn(name = "roles")
     private Role role;

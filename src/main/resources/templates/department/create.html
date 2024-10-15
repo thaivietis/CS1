@@ -24,13 +24,11 @@
           <li class="breadcrumb-item"><a th:href="@{/}">Dashboard</a></li>
           <li class="breadcrumb-item active">Department</li>
         </ol>
-        <form action="#" th:action="@{/department/create}" th:method="post" th:modelAttribute="${newDepartment}" th:multiple="text">
+        <form action="#" th:action="@{/department/create}" th:method="post" th:object="${newDepartment}">
           <div class="row">
             <label>Tên phòng ban</label>
-            <input th:field="*{name}" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" type="text" class="form-control" placeholder="Họ và tên" aria-label="Username" aria-describedby="addon-wrapping" name="name"/>
-            <div th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
-              <span th:errors="*{name}"></span>
-            </div>
+            <input th:field="*{name}" type="text" class="form-control" placeholder="Tên phòng ban" aria-label="Username" aria-describedby="addon-wrapping" name="name"/>
+            <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
           </div>
           <div class="row mt-3">
             <label>Mô tả</label>

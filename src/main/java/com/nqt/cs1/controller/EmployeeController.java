@@ -5,9 +5,11 @@ import com.nqt.cs1.domain.Employee;
 import com.nqt.cs1.service.DepartmentService;
 import com.nqt.cs1.service.EmployeeService;
 import com.nqt.cs1.service.imp.UploadService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,15 +27,24 @@ public class EmployeeController {
     private UploadService uploadService;
 
     @GetMapping("/employee/create")
-    public String CreateEmployee(Model model){
+    public String createEmployee(Model model){
         List<Department> departmentList = this.departmentService.getAll();
         model.addAttribute("departmentList", departmentList);
+        model.addAttribute("newEmployee", new Employee());
         return "employee/create";
     }
 
     @PostMapping("/employee/create")
-    public String PostCreateEmployee(@ModelAttribute Employee employee, @RequestParam("gender") String gender,
-                                     @RequestParam("avatarFile") MultipartFile file){
+    public String postCreateEmployee(@ModelAttribute("newEmployee") @Valid Employee employee,
+                                     BindingResult bindingResult,
+                                     @RequestParam("gender") String gender,
+                                     @RequestParam("avatarFile") MultipartFile file,
+                                     Model model){
+        if(bindingResult.hasErrors()){
+            List<Department> departmentList = this.departmentService.getAll();
+            model.addAttribute("departmentList", departmentList);
+            return "employee/create";
+        }
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         employee.setGender(checkGenDer(gender));
         employee.setAvatar(avatar);
@@ -42,7 +53,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/detail/{id}")
-    public String DetailEmployee(@PathVariable int id, Model model){
+    public String detailEmployee(@PathVariable int id, Model model){
         Employee employee = this.employeeService.findById(id);
         String gender;
         if(employee.getGender()==true){
@@ -54,7 +65,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/update/{id}")
-    public String UpdateEmployee(@PathVariable int id, Model model){
+    public String updateEmployee(@PathVariable int id, Model model){
         List<Department> departmentList = this.departmentService.getAll();
         Employee employee = this.employeeService.findById(id);
         String gender = null;
@@ -70,7 +81,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee/update")
-    public String PostUpdateEmployee(@ModelAttribute Employee employee, @RequestParam("gender") String gender
+    public String postUpdateEmployee(@ModelAttribute Employee employee, @RequestParam("gender") String gender
             , @RequestParam("avatarFile") MultipartFile file){
         String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         Employee employee1 = this.employeeService.findById(employee.getId());
@@ -91,14 +102,14 @@ public class EmployeeController {
     }
 
     @GetMapping("/employee/delete/{id}")
-    public String DeleteEmployee(@PathVariable int id, Model model){
+    public String deleteEmployee(@PathVariable int id, Model model){
         Employee employee = this.employeeService.findById(id);
         model.addAttribute("employee", employee);
         return "employee/delete";
     }
 
     @PostMapping("/employee/delete")
-    public String PostDeleteEmployee(@ModelAttribute Employee employee){
+    public String postDeleteEmployee(@ModelAttribute Employee employee){
         this.employeeService.deleteEmployee(employee.getId());
         return "redirect:/employee";
     }

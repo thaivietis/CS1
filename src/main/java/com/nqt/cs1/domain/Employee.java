@@ -16,14 +16,14 @@ import java.time.LocalDate;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private int id;
 
-    @NotNull
+    @NotBlank(message = "Không được để trống")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]{10}$", message = "Employee ID phải có đúng 10 ký tự, bao gồm cả chữ và số")
     private String employeeId;
 
-    @NotNull
-    @Size(min = 10, max = 200)
+    @NotBlank(message = "Tên không phù hợp")
+    @Size(min = 10, max = 200, message = "Tên không phù hợp")
     private String fullName;
 
     private Boolean gender;
@@ -35,12 +35,10 @@ public class Employee {
 
     private Double salary;
 
-    @Min(value = 1)
-    @Max(value = 10)
     private int level;
 
     @Email
-    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@vietis\\.com$", message = "Email không hợp lệ")
+    @Pattern(regexp = "^[A-Za-z0-9._%+-]+@gmail\\.com$", message = "Email không hợp lệ")
     private String email;
 
     @Pattern(regexp = "^0\\d{9}$", message = "Số điện thoại không hợp lệ")

@@ -1,6 +1,7 @@
 package com.nqt.cs1.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -17,21 +18,19 @@ import java.time.LocalDate;
 public class Infomation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private int id;
 
-    @NotNull
+    @NotBlank(message = "Không được để trống")
     private String type;
 
-    @NotNull
+    @NotBlank(message = "Không được để trống")
     @Column(columnDefinition = "MEDIUMTEXT")
     private String reason;
 
-    @NotNull
+    @NotNull(message = "Không được để trống")
     @PastOrPresent(message = "Ngày không được lựa chọn quá hiện tại")
     private LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @NotNull
     private Employee employee;
 }
