@@ -2,10 +2,10 @@
 # Account
 
 Admin: admin@gmail.com
-Password: 123456
+Password: 12345678
 
 User1: user1@gmail.com
-Password: 123456
+Password: 12345678
 
 User2: user2@gmail.com
-Password: 123456
+Password: 12345678

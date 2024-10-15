@@ -81,10 +81,17 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee/update")
-    public String postUpdateEmployee(@ModelAttribute Employee employee, @RequestParam("gender") String gender
-            , @RequestParam("avatarFile") MultipartFile file){
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+    public String postUpdateEmployee(@ModelAttribute("employee") @Valid Employee employee,
+                                     BindingResult bindingResult,
+                                     @RequestParam("gender") String gender,
+                                     @RequestParam("avatarFile") MultipartFile file,
+                                     Model model){
         Employee employee1 = this.employeeService.findById(employee.getId());
+        if(bindingResult.hasErrors()){
+            model.addAttribute("employee", employee1);
+            return "employee/update";
+        }
+        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
         employee1.setId(employee.getId());
         employee1.setFullName(employee.getFullName());
         employee1.setAvatar(avatar);

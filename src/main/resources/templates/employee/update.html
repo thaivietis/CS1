@@ -35,17 +35,19 @@
                     <li class="breadcrumb-item"><a th:href="@{/}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Employee</li>
                 </ol>
-                <form action="#" th:action="@{/employee/update}" method="POST" enctype="multipart/form-data">
+                <form action="#" th:action="@{/employee/update}" method="POST" enctype="multipart/form-data" th:object="${employee}">
                     <div class="row mt-3 " style="display: none;">
                         <input th:value="${employee.id}" type="text" class="form-control" name="id"/>
                     </div>
                     <div class="row mt-3">
                         <label>Mã nhân viên</label>
-                        <input th:value="${employee.employeeId}" type="text" class="form-control" placeholder="Mã nhân viên" aria-label="EmployeeId" name="employeeId"/>
+                        <input th:value="${employee.employeeId}" type="text" class="form-control" placeholder="Mã nhân viên" aria-label="EmployeeId" th:field="*{employeeId}"/>
+                        <p class="text-danger" th:if="${#fields.hasErrors('employeeId')}" th:errors="*{employeeId}"></p>
                     </div>
                     <div class="row mt-3">
                         <label>Tên nhân viên</label>
-                        <input th:value="${employee.fullName}" type="text" class="form-control" placeholder="Họ và tên" aria-label="Employee" name="fullName"/>
+                        <input th:value="${employee.fullName}" type="text" class="form-control" placeholder="Họ và tên" aria-label="Employee" th:field="*{fullName}"/>
+                        <p class="text-danger" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></p>
                     </div>
                     <div class="row mt-3">
                         <label>Giới tính</label>
@@ -57,15 +59,18 @@
                     </div>
                     <div class="row mt-3">
                         <label>Ngày sinh</label>
-                        <input type="date" th:value="${employee.dateOfBirth}" class="form-control" placeholder="Ngày sinh" aria-label="DateOfBirth" name="dateOfBirth"/>
+                        <input type="date" th:value="${employee.dateOfBirth}" class="form-control" placeholder="Ngày sinh" aria-label="DateOfBirth" th:field="*{dateOfBirth}"/>
+                        <p class="text-danger" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></p>
                     </div>
                     <div class="row mt-3">
                         <label>Email</label>
-                        <input type="email" th:value="${employee.email}" class="form-control" placeholder="Email" aria-label="Email" name="email"/>
+                        <input type="email" th:value="${employee.email}" class="form-control" placeholder="Email" aria-label="Email" th:field="*{email}"/>
+                        <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                     </div>
                     <div class="row mt-3">
                         <label>Số điện thoại</label>
-                        <input type="text" th:value="${employee.phone}" class="form-control" placeholder="Số điện thoại" aria-label="phone" name="phone"/>
+                        <input type="text" th:value="${employee.phone}" class="form-control" placeholder="Số điện thoại" aria-label="phone" th:field="*{phone}"/>
+                        <p class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
                     </div>
                     <div class="row mt-3">
                         <label>Lương</label>
@@ -80,7 +85,8 @@
                     </div>
                     <div class="row mt-3">
                         <label>Ghi chú</label>
-                        <textarea type="text" th:text="${employee.description}" class="form-control" placeholder="Nội dung" aria-label="Description" name="description"></textarea>
+                        <textarea type="text" th:text="${employee.description}" class="form-control" placeholder="Nội dung" aria-label="Description" th:field="*{description}"></textarea>
+                        <p class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
                     </div>
                     <div class="row mt-3">
                         <label>Cấp độ</label>
@@ -95,13 +101,14 @@
                     </div>
                     <div class="row mt-3">
                         <label>Phòng ban</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="department">
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" th:field="*{department}">
                             <option disabled selected>Phòng ban</option>
                             <option th:each="department : ${departmentList}"
                                     th:value="${department.id}"
                                     th:text="${department.name}"
                                     th:selected="${department.name == employee.department.name}"></option>
                         </select>
+                        <p class="text-danger" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></p>
                     </div>
                     <div class="d-flex justify-content-end mt-3">
                         <a class="btn btn-warning mx-2" th:href="@{/employee}">Hủy</a>
