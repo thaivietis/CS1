@@ -29,6 +29,13 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @GetMapping(value = "/user")
+    public String getUser(Model model) {
+        List<User> users = this.userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "user/show";
+    }
+
     @GetMapping("/user/create")
     public String createUser(Model model) {
         List<Role> role = this.roleRepository.findAll();

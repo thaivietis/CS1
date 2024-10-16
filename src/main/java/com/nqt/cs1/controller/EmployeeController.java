@@ -26,6 +26,13 @@ public class EmployeeController {
     @Autowired
     private UploadService uploadService;
 
+    @GetMapping(value = "/employee")
+    public String getEmployee(Model model) {
+        List<Employee> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "employee/show";
+    }
+
     @GetMapping("/employee/create")
     public String createEmployee(Model model){
         List<Department> departmentList = this.departmentService.getAll();

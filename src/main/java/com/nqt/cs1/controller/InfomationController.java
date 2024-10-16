@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class InfomationController {
     @Autowired
@@ -20,6 +22,13 @@ public class InfomationController {
     @Autowired
     private EmployeeService employeeService;
 
+    @GetMapping(value = "/infomation")
+    public String getInfomation(Model model) {
+        List<Infomation> informationList = this.infomationService.getAll();
+        model.addAttribute("informations", informationList);
+        return "infomation/show";
+    }
+    
     @GetMapping("/infomation/create")
     public String createInformation(){
         return "infomation/find";

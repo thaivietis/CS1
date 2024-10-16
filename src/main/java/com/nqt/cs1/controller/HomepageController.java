@@ -1,24 +1,23 @@
 package com.nqt.cs1.controller;
 
-import com.nqt.cs1.domain.Department;
-import com.nqt.cs1.domain.Employee;
-import com.nqt.cs1.domain.Infomation;
-import com.nqt.cs1.domain.User;
 import com.nqt.cs1.dto.DepartmentInformationDTO;
 import com.nqt.cs1.dto.EmployeeInfomationDTO;
-import com.nqt.cs1.service.DepartmentService;
-import com.nqt.cs1.service.EmployeeService;
-import com.nqt.cs1.service.InfomationService;
 import com.nqt.cs1.service.imp.DepartmentServiceImp;
 import com.nqt.cs1.service.imp.EmployeeServiceImp;
 import com.nqt.cs1.service.imp.InfomationServiceImp;
 import com.nqt.cs1.service.imp.UserServiceImp;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,34 +58,6 @@ public class HomepageController {
         return "admin/department";
     }
 
-    @GetMapping(value = "/user")
-    public String getUser(Model model) {
-        List<User> users = this.userService.getAllUsers();
-        model.addAttribute("users", users);
-        return "user/show";
-    }
-
-    @GetMapping(value = "/employee")
-    public String getEmployee(Model model) {
-        List<Employee> employees = employeeService.getAllEmployees();
-        model.addAttribute("employees", employees);
-        return "employee/show";
-    }
-
-    @GetMapping(value = "/department")
-    public String getDepartment(Model model) {
-        List<Department> departmentList = this.departmentService.getAll();
-        model.addAttribute("departments", departmentList);
-        return "department/show";
-    }
-
-    @GetMapping(value = "/infomation")
-    public String getInfomation(Model model) {
-        List<Infomation> informationList = this.infomationService.getAll();
-        model.addAttribute("informations", informationList);
-        return "infomation/show";
-    }
-
     @GetMapping(value = "/login")
     public String getLogin(){
         return "auth/login";
@@ -105,5 +76,32 @@ public class HomepageController {
     @GetMapping(value = "/send")
     public String send(){
         return "mail/send";
+    }
+
+    @GetMapping(value = "/search")
+    public void searchKeyWord(Model model) throws InterruptedException, IOException {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.navigate().to("https://www.google.com/");
+        WebElement elementSearch = driver.findElement(By.name("q"));
+        elementSearch.sendKeys("Highlands");
+        Thread.sleep(2000); // Chờ 2 giây cho các gợi ý hiển thị
+
+        // Capture lại hình ảnh sau khi gợi ý hiển thị
+        TakesScreenshot screenshot = (TakesScreenshot) driver;
+        File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+        String destinationPath = "C:\\path_to_save\\screenshot.png"; // Đổi đường dẫn lưu file tùy ý
+        Files.copy(sourceFile.toPath(), Paths.get(destinationPath));
+
+        List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
+        WebElement clickedSuggestion = null;
+        for (WebElement suggestion : suggestions) {
+            System.out.print(suggestion.getText()+"\n");
+            suggestion.click();
+            clickedSuggestion = suggestion;
+        }
+        Thread.sleep(300000);
+        driver.close();
     }
 }

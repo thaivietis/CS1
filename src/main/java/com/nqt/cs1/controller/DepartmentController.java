@@ -13,11 +13,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
+
+    @GetMapping(value = "/department")
+    public String getDepartment(Model model) {
+        List<Department> departmentList = this.departmentService.getAll();
+        model.addAttribute("departments", departmentList);
+        return "department/show";
+    }
 
     @GetMapping("/department/create")
     public String createDepartment(Model model){
