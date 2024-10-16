@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 public class HomepageController {
@@ -89,12 +90,13 @@ public class HomepageController {
         Thread.sleep(2000); // Chờ 2 giây cho các gợi ý hiển thị
 
         // Capture lại hình ảnh sau khi gợi ý hiển thị
-        TakesScreenshot screenshot = (TakesScreenshot) driver;
-        File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-        String destinationPath = "C:\\path_to_save\\screenshot.png"; // Đổi đường dẫn lưu file tùy ý
-        Files.copy(sourceFile.toPath(), Paths.get(destinationPath));
+//        TakesScreenshot screenshot = (TakesScreenshot) driver;
+//        File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+//        String rootPath = Paths.get("src", "main", "resources", "static", "capture").toFile().getAbsolutePath();
+//        Files.copy(sourceFile.toPath(), Paths.get(rootPath));
 
         List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
+        suggestions.stream().map(suggestion -> suggestion.getText() + "\n")
         WebElement clickedSuggestion = null;
         for (WebElement suggestion : suggestions) {
             System.out.print(suggestion.getText()+"\n");
