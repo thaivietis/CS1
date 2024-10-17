@@ -22,4 +22,9 @@ public class KeywordServiceImp implements KeywordService {
     public List<Keyword> findAllKeywords() {
         return this.keywordRepository.findAll();
     }
+
+    @Override
+    public Keyword findById(long id){
+        return this.keywordRepository.findById(id).orElse(null);
+    }
 }

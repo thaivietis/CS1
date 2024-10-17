@@ -22,87 +22,28 @@
             <th>DISPLAY KEYWORDS</th>
             <th>PLATFORM</th>
             <th>MATCH PATTERN</th>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
+            <th class="text-center" th:each="i : ${#numbers.sequence(1, 31)}" th:text="${i}">
+
+            </th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="keyword : ${keywords}">
-            <td th:text="${keyword.keywordSearch}"></td>
+        <tr th:each="result : ${resultList}">
+            <td th:text="${result.keyword.keywordSearch}"></td>
             <td>
-                <pre th:text="${keyword.keywordMatch}"></pre>
+                <pre th:text="${result.keyword.keywordMatch}"></pre>
             </td>
-            <td class="platform-ysuggestions" th:text="${keyword.platform}"></td>
-            <td th:text="${keyword.pattern}"></td>
-            <td>
-                <span class="file-icon">📄</span>
-                <div class="keyword-list">
-                    Used Machinery Information Department Store<br>
-                    Used Machines Intex<br>
-                    Used Machine Purchase<br>
-                    Used Machinery Service Life<br>
-                    Used Machinery Osaka<br>
-                </div>
-            </td>
-            <td>
-                <span class="file-icon">📄</span>
-                <div class="keyword-list">
-                    Used Machinery Information Department Store<br>
-                    Used Machines Intex<br>
-                    Used Machine Purchase<br>
-                    Used Machinery Service Life<br>
-                    Used Machinery Bidding<br>
-                </div>
-            </td>
-            <td>
-                <span class="file-icon">📄</span>
-                <div class="keyword-list">
-                    Used Machinery Information Department Store<br>
-                    Used Machines Intex<br>
-                    Used Machine Purchase<br>
-                    Used Machinery Osaka<br>
-                    Used Machinery Aichi<br>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Used Machinery</td>
-            <td>
-                Used machinery information Department store<br>
-                information Department store<br>
-                Department store
-            </td>
-            <td class="platform-gsuggestions">GSuggestions</td>
-            <td>Partial match</td>
-            <td>
-                <span class="file-icon">📄</span>
-                <div class="keyword-list">
-                    Used Machinery Import Restrictions in Japan<br>
-                    Used Machinery Auction<br>
-                    Used Machinery Service Life<br>
-                    Used Machinery Department Store<br>
-                    Used Machinery Bidding<br>
-                </div>
-            </td>
-            <td>
-                <span class="file-icon">📄</span>
-                <div class="keyword-list">
-                    Used Machinery Import Restrictions in Japan<br>
-                    Used Machinery Auction<br>
-                    Used Machinery Service Life<br>
-                    Used Machinery Department Store<br>
-                    Used Machinery Osaka<br>
-                </div>
-            </td>
-            <td>
-                <span class="file-icon">📄</span>
-                <div class="keyword-list">
-                    Used Machinery Import Restrictions in Japan<br>
-                    Used Machinery Auction<br>
-                    Used Machinery Bidding<br>
-                    Used Machinery Sales Contract Stamp<br>
-                    Used Machines Intex<br>
+            <td class="platform-ysuggestions" th:text="${result.keyword.platform}"></td>
+            <td th:text="${result.keyword.pattern}"></td>
+            <td th:each="i : ${#numbers.sequence(1, 31)}">
+                <div th:if="${#temporals.format(result.time, 'dd') == i.toString()}">
+                    <span class="file-icon">
+                        <a th:href="@{/images/capture/{name}(name = ${result.image})}">📄</a>
+                    </span>
+                    <div th:each="suggestion : ${suggestionsMap[result.id]}">
+                        <p th:style="(${suggestion} == ${result.keyword.keywordMatch} ? 'color: red;' : 'color: black;')"
+                           th:text="${suggestion}"></p>
+                    </div>
                 </div>
             </td>
         </tr>

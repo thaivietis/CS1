@@ -1,11 +1,11 @@
 package com.nqt.cs1.controller;
 
+import com.nqt.cs1.domain.Keyword;
+import com.nqt.cs1.domain.Result;
 import com.nqt.cs1.dto.DepartmentInformationDTO;
 import com.nqt.cs1.dto.EmployeeInfomationDTO;
-import com.nqt.cs1.service.imp.DepartmentServiceImp;
-import com.nqt.cs1.service.imp.EmployeeServiceImp;
-import com.nqt.cs1.service.imp.InfomationServiceImp;
-import com.nqt.cs1.service.imp.UserServiceImp;
+import com.nqt.cs1.service.ResultService;
+import com.nqt.cs1.service.imp.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +37,12 @@ public class HomepageController {
 
     @Autowired
     private UserServiceImp userService;
+
+    @Autowired
+    private ResultServiceImp resultService;
+
+    @Autowired
+    private KeywordServiceImp keywordService;
 
     @GetMapping(value = "/")
     public String getClien(Model model) {
@@ -81,29 +88,31 @@ public class HomepageController {
 
     @GetMapping(value = "/search")
     public void searchKeyWord(Model model) throws InterruptedException, IOException {
+        List<Keyword> keywordList = this.keywordService.findAllKeywords();
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.navigate().to("https://www.google.com/");
-        WebElement elementSearch = driver.findElement(By.name("q"));
-        elementSearch.sendKeys("Highlands");
-        Thread.sleep(2000); // Chờ 2 giây cho các gợi ý hiển thị
-
-        // Capture lại hình ảnh sau khi gợi ý hiển thị
-//        TakesScreenshot screenshot = (TakesScreenshot) driver;
-//        File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-//        String rootPath = Paths.get("src", "main", "resources", "static", "capture").toFile().getAbsolutePath();
-//        Files.copy(sourceFile.toPath(), Paths.get(rootPath));
-
-        List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
-        suggestions.stream().map(suggestion -> suggestion.getText() + "\n")
-        WebElement clickedSuggestion = null;
-        for (WebElement suggestion : suggestions) {
-            System.out.print(suggestion.getText()+"\n");
-            suggestion.click();
-            clickedSuggestion = suggestion;
+        for (Keyword keyword : keywordList){
+            driver.manage().window().maximize();
+            driver.navigate().to("https://www.google.com/");
+            WebElement elementSearch = driver.findElement(By.name("q"));
+            elementSearch.sendKeys(keyword.getKeywordSearch());
+            Thread.sleep(2000); // Chờ 2 giây cho các gợi ý hiển thị
+            Result result = new Result();
+            // Capture lại hình ảnh sau khi gợi ý hiển thị
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+            String rootPath = Paths.get("src", "main", "resources", "static", "images", "capture").toFile().getAbsolutePath();
+            String finalName = System.currentTimeMillis() + "-capture.jpg";
+            Files.copy(sourceFile.toPath(), Paths.get(rootPath + File.separator + finalName));
+            List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
+            String  suggestionList = suggestions.stream().map(suggestion -> suggestion.getText()+", "). collect(Collectors.joining());
+            result.setSuggestions(suggestionList);
+            result.setImage(finalName);
+            result.setKeyword(keyword);
+            result.setTime(LocalDate.now());
+            this.resultService.saveResult(result);
         }
-        Thread.sleep(300000);
+        Thread.sleep(2000);
         driver.close();
     }
 }
