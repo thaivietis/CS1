@@ -23,8 +23,7 @@ public class ResultServiceImp implements ResultService {
         return this.resultRepository.findAll();
     }
 
-    public  String[] processSuggestions(Result result){
-        return result.getSuggestions().split(",\\s*");
-
+    public String[] processSuggestions(Result result){
+        return result.getSuggestions().split("\n\\s*");
     }
 }

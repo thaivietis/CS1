@@ -23,7 +23,7 @@
       <th>PLATFORM</th>
       <th>MATCH PATTERN</th>
       <th>REMARKS</th>
-      <th colspan="17">1 - 17</th>
+      <th class="text-center" th:each="i : ${#numbers.sequence(1, 31)}" th:text="${i}"></th>
     </tr>
     </thead>
     <tbody>
@@ -34,21 +34,16 @@
       </td>
       <td class="platform-ysuggestions" th:text="${keyword.platform}"></td>
       <td th:text="${keyword.device}"></td>
-      <td class="remark" >Remark 1</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox">-</td>
-      <td class="checkbox">-</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox">-</td>
-      <td class="checkbox">-</td>
-      <td class="checkbox">-</td>
-      <td class="checkbox">-</td>
-      <td class="checkbox active">✔</td>
-      <td class="checkbox active">✔</td>
+      <td class="remark"></td>
+      <td th:each="i : ${#numbers.sequence(1, 31)}">
+        <div th:each="result : ${keyword.results}">
+          <div th:if="${result.time.dayOfMonth == i}">
+            <div  th:each="checkMatchMap : ${checkMatchMap[result.id]}">
+              <p class="checkbox" th:text="${checkMatchMap == true ? '✔' : '-'}"></p>
+            </div>
+          </div>
+        </div>
+      </td>
     </tr>
     </tbody>
   </table>

@@ -22,31 +22,32 @@
             <th>DISPLAY KEYWORDS</th>
             <th>PLATFORM</th>
             <th>MATCH PATTERN</th>
-            <th class="text-center" th:each="i : ${#numbers.sequence(1, 31)}" th:text="${i}">
-
-            </th>
+            <th class="text-center" th:each="i : ${#numbers.sequence(1, 31)}" th:text="${i}"></th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="result : ${resultList}">
-            <td th:text="${result.keyword.keywordSearch}"></td>
-            <td>
-                <pre th:text="${result.keyword.keywordMatch}"></pre>
-            </td>
-            <td class="platform-ysuggestions" th:text="${result.keyword.platform}"></td>
-            <td th:text="${result.keyword.pattern}"></td>
-            <td th:each="i : ${#numbers.sequence(1, 31)}">
-                <div th:if="${#temporals.format(result.time, 'dd') == i.toString()}">
-                    <span class="file-icon">
-                        <a th:href="@{/images/capture/{name}(name = ${result.image})}">📄</a>
-                    </span>
-                    <div th:each="suggestion : ${suggestionsMap[result.id]}">
-                        <p th:style="(${suggestion} == ${result.keyword.keywordMatch} ? 'color: red;' : 'color: black;')"
-                           th:text="${suggestion}"></p>
+        <tbody th:each="keyword : ${keywordList}">
+            <tr>
+                <td th:text="${keyword.keywordSearch}"></td>
+                <td>
+                    <pre th:text="${keyword.keywordMatch}"></pre>
+                </td>
+                <td class="platform-ysuggestions" th:text="${keyword.platform}"></td>
+                <td th:text="${keyword.pattern}"></td>
+                <td th:each="i : ${#numbers.sequence(1, 31)}">
+                    <div th:each="result : ${keyword.results}"  >
+                        <div th:if="${result.time.dayOfMonth == i}">
+                            <span class="file-icon">
+                                <a th:href="@{/images/capture/{name}(name = ${result.image})}">📄</a>
+                            </span>
+                            <div  th:each="suggestion : ${suggestionsMap[result.id]}">
+                                <p th:style="(${suggestion} == ${keyword.keywordMatch} ? 'color: red;' : 'color: black;')"
+                                   th:text="${suggestion}"></p>
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-            </td>
-        </tr>
+                </td>
+            </tr>
         </tbody>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

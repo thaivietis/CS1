@@ -88,31 +88,6 @@ public class HomepageController {
 
     @GetMapping(value = "/search")
     public void searchKeyWord(Model model) throws InterruptedException, IOException {
-        List<Keyword> keywordList = this.keywordService.findAllKeywords();
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        for (Keyword keyword : keywordList){
-            driver.manage().window().maximize();
-            driver.navigate().to("https://www.google.com/");
-            WebElement elementSearch = driver.findElement(By.name("q"));
-            elementSearch.sendKeys(keyword.getKeywordSearch());
-            Thread.sleep(2000); // Chờ 2 giây cho các gợi ý hiển thị
-            Result result = new Result();
-            // Capture lại hình ảnh sau khi gợi ý hiển thị
-            TakesScreenshot screenshot = (TakesScreenshot) driver;
-            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-            String rootPath = Paths.get("src", "main", "resources", "static", "images", "capture").toFile().getAbsolutePath();
-            String finalName = System.currentTimeMillis() + "-capture.jpg";
-            Files.copy(sourceFile.toPath(), Paths.get(rootPath + File.separator + finalName));
-            List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
-            String  suggestionList = suggestions.stream().map(suggestion -> suggestion.getText()+", "). collect(Collectors.joining());
-            result.setSuggestions(suggestionList);
-            result.setImage(finalName);
-            result.setKeyword(keyword);
-            result.setTime(LocalDate.now());
-            this.resultService.saveResult(result);
-        }
-        Thread.sleep(2000);
-        driver.close();
+
     }
 }

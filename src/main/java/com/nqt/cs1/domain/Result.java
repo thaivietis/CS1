@@ -20,6 +20,7 @@ public class Result {
     private String suggestions;
     private LocalDate time;
     private String image;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "keyword_id")
     private Keyword keyword;
 }

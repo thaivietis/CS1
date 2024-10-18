@@ -4,8 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -23,4 +25,7 @@ public class Keyword {
     private String pattern;
     private String device;
     private String remarks;
+    @OneToMany(mappedBy = "keyword")
+    @ToString.Exclude
+    private List<Result> results;
 }
