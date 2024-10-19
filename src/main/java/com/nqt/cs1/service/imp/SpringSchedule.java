@@ -27,31 +27,25 @@ public class SpringSchedule {
 
     @Autowired
     private ResultServiceImp resultService;
-    @Scheduled(cron = "0 * * ? * *")
+
+    @Autowired
+    private CaptureService captureService;
+
+    @Autowired
+    private SearchKeywordService searchKeywordService;
+
+    @Scheduled(cron = "0 0/5 * ? * *")
     public void searchSchedule() throws IOException, InterruptedException {
         List<Keyword> keywordList = this.keywordService.findAllKeywords();
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
-        for (Keyword keyword : keywordList){
-            driver.manage().window().maximize();
-            driver.navigate().to("https://www.google.com/");
-            WebElement elementSearch = driver.findElement(By.name("q"));
-            elementSearch.sendKeys(keyword.getKeywordSearch());
-            Thread.sleep(2000); // Chờ 2 giây cho các gợi ý hiển thị
-            Result result = new Result();
-            // Capture lại hình ảnh sau khi gợi ý hiển thị
-            TakesScreenshot screenshot = (TakesScreenshot) driver;
-            File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-            String rootPath = Paths.get("src", "main", "resources", "static", "images", "capture").toFile().getAbsolutePath();
-            String finalName = System.currentTimeMillis() + "-capture.jpg";
-            Files.copy(sourceFile.toPath(), Paths.get(rootPath + File.separator + finalName));
-            List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
-            String  suggestionList = suggestions.stream().map(suggestion -> suggestion.getText()+"\n"). collect(Collectors.joining());
-            result.setSuggestions(suggestionList);
-            result.setImage(finalName);
-            result.setKeyword(keyword);
-            result.setTime(LocalDate.now());
-            this.resultService.saveResult(result);
+        for (Keyword keyword : keywordList) {
+            if(keyword.getPlatform().equals("GOOGLE")){
+                this.searchKeywordService.Search(driver, "https://www.google.com/", "q", keyword);
+            }
+            else{
+                this.searchKeywordService.Search(driver, "https://vn.yahoo.com/", "p", keyword);
+            }
         }
         Thread.sleep(2000);
         driver.close();
