@@ -34,20 +34,28 @@ public class SpringSchedule {
     @Autowired
     private SearchKeywordService searchKeywordService;
 
-    @Scheduled(cron = "0 0/5 * ? * *")
+    @Scheduled(cron = "0 0 9 ? * *")
     public void searchSchedule() throws IOException, InterruptedException {
         List<Keyword> keywordList = this.keywordService.findAllKeywords();
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = null;
         for (Keyword keyword : keywordList) {
-            if(keyword.getPlatform().equals("GOOGLE")){
-                this.searchKeywordService.Search(driver, "https://www.google.com/", "q", keyword);
-            }
-            else{
-                this.searchKeywordService.Search(driver, "https://vn.yahoo.com/", "p", keyword);
+            if(keyword.getPlatform().equals("GOOGLE") && keyword.getDevice().equals("PC")){
+                driver = this.searchKeywordService.searchWithPC();
+                this.searchKeywordService.search(driver, "https://www.google.com/", "q", keyword);
+            }else if(keyword.getPlatform().equals("GOOGLE") && keyword.getDevice().equals("Smartphone")){
+                driver = this.searchKeywordService.searchWithSm();
+                this.searchKeywordService.search(driver, "https://www.google.com/", "q", keyword);
+            }else if (keyword.getPlatform().equals("YAHOO") && keyword.getDevice().equals("PC")) {
+                driver = this.searchKeywordService.searchWithPC();
+                this.searchKeywordService.search(driver, "https://www.yahoo.com/", "p", keyword);
+            }else {
+                driver = this.searchKeywordService.searchWithSm();
+                this.searchKeywordService.search(driver, "https://www.yahoo.com/", "p", keyword);
             }
         }
         Thread.sleep(2000);
+        assert driver != null;
         driver.close();
     }
 }
