@@ -1,5 +1,6 @@
 package com.nqt.cs1.service.imp;
 
+import com.nqt.cs1.constant.UrlConstant;
 import com.nqt.cs1.domain.Keyword;
 import com.nqt.cs1.domain.Result;
 import com.nqt.cs1.service.ResultService;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class SpringSchedule {
+
     @Autowired
     private KeywordServiceImp keywordService;
 
@@ -37,25 +39,51 @@ public class SpringSchedule {
     @Scheduled(cron = "0 0 9 ? * *")
     public void searchSchedule() throws IOException, InterruptedException {
         List<Keyword> keywordList = this.keywordService.findAllKeywords();
+        Result result = new Result();
         WebDriverManager.chromedriver().setup();
         WebDriver driver = null;
         for (Keyword keyword : keywordList) {
             if(keyword.getPlatform().equals("GOOGLE") && keyword.getDevice().equals("PC")){
                 driver = this.searchKeywordService.searchWithPC();
-                this.searchKeywordService.search(driver, "https://www.google.com/", "q", keyword);
+                String suggestionList = this.searchKeywordService.search(driver, UrlConstant.URL_GOOGLE, "q", keyword.getKeywordSearch());
+                result.setSuggestions(suggestionList);
+                result.setImage(this.captureService.CaptureImg(driver));
+                result.setKeyword(keyword);
+                result.setTime(LocalDate.now());
+                this.resultService.saveResult(result);
+                Thread.sleep(2000);
+                driver.close();
             }else if(keyword.getPlatform().equals("GOOGLE") && keyword.getDevice().equals("Smartphone")){
                 driver = this.searchKeywordService.searchWithSm();
-                this.searchKeywordService.search(driver, "https://www.google.com/", "q", keyword);
+                String suggestionList = this.searchKeywordService.search(driver, UrlConstant.URL_GOOGLE, "q", keyword.getKeywordSearch());
+                result.setSuggestions(suggestionList);
+                result.setImage(this.captureService.CaptureImg(driver));
+                result.setKeyword(keyword);
+                result.setTime(LocalDate.now());
+                this.resultService.saveResult(result);
+                Thread.sleep(2000);
+                driver.close();
             }else if (keyword.getPlatform().equals("YAHOO") && keyword.getDevice().equals("PC")) {
                 driver = this.searchKeywordService.searchWithPC();
-                this.searchKeywordService.search(driver, "https://www.yahoo.com/", "p", keyword);
+                String suggestionList = this.searchKeywordService.search(driver, UrlConstant.URL_YAHOO, "p", keyword.getKeywordSearch());
+                result.setSuggestions(suggestionList);
+                result.setImage(this.captureService.CaptureImg(driver));
+                result.setKeyword(keyword);
+                result.setTime(LocalDate.now());
+                this.resultService.saveResult(result);
+                Thread.sleep(2000);
+                driver.close();
             }else {
                 driver = this.searchKeywordService.searchWithSm();
-                this.searchKeywordService.search(driver, "https://www.yahoo.com/", "p", keyword);
+                String suggestionList = this.searchKeywordService.search(driver, UrlConstant.URL_YAHOO, "p", keyword.getKeywordSearch());
+                result.setSuggestions(suggestionList);
+                result.setImage(this.captureService.CaptureImg(driver));
+                result.setKeyword(keyword);
+                result.setTime(LocalDate.now());
+                this.resultService.saveResult(result);
+                Thread.sleep(2000);
+                driver.close();
             }
         }
-        Thread.sleep(2000);
-        assert driver != null;
-        driver.close();
     }
 }

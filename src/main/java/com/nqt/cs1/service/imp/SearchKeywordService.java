@@ -27,20 +27,15 @@ public class SearchKeywordService {
     private ResultServiceImp resultService;
 
 
-    public void search(WebDriver driver, String http, String emlementByName, Keyword keyword) throws InterruptedException, IOException {
+    public String search(WebDriver driver, String http, String emlementByName, String nameKeyword) throws InterruptedException, IOException {
         driver.manage().window().maximize();
         driver.navigate().to(http);
         WebElement elementSearch = driver.findElement(By.name(emlementByName));
-        elementSearch.sendKeys(keyword.getKeywordSearch());
+        elementSearch.sendKeys(nameKeyword);
         Thread.sleep(2000);
-        Result result = new Result();
         List<WebElement> suggestions = driver.findElements(By.cssSelector("ul[role='listbox'] li"));
-        String  suggestionList = suggestions.stream().map(suggestion -> suggestion.getText()+"\n"). collect(Collectors.joining());
-        result.setSuggestions(suggestionList);
-        result.setImage(this.captureService.CaptureImg(driver));
-        result.setKeyword(keyword);
-        result.setTime(LocalDate.now());
-        this.resultService.saveResult(result);
+        String suggestionList = suggestions.stream().map(suggestion -> suggestion.getText()+"\n"). collect(Collectors.joining());
+        return suggestionList;
     }
 
     public WebDriver searchWithPC(){
