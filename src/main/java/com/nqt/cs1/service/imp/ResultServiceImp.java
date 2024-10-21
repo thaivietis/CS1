@@ -1,5 +1,6 @@
 package com.nqt.cs1.service.imp;
 
+import com.nqt.cs1.domain.Keyword;
 import com.nqt.cs1.domain.Result;
 import com.nqt.cs1.repository.ResultRepository;
 import com.nqt.cs1.service.ResultService;
@@ -26,4 +27,6 @@ public class ResultServiceImp implements ResultService {
     public String[] processSuggestions(Result result){
         return result.getSuggestions().split("\n\\s*");
     }
+
+
 }
