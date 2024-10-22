@@ -15,6 +15,21 @@
                 window.location.href = `/screen-2?date=${monthValue}`;
             }
         }
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function setMonthFromURL() {
+            const monthInput = document.getElementById('monthInput');
+            const monthValue = getQueryParam('date');
+            if (monthValue) {
+                monthInput.value = monthValue;
+            }
+        }
+
+        window.onload = setMonthFromURL;
     </script>
 </head>
 <body>

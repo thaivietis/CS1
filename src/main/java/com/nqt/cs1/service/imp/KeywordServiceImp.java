@@ -1,8 +1,10 @@
 package com.nqt.cs1.service.imp;
 
 import com.nqt.cs1.domain.Keyword;
+import com.nqt.cs1.domain.Result;
 import com.nqt.cs1.repository.KeywordRepository;
 import com.nqt.cs1.service.KeywordService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class KeywordServiceImp implements KeywordService {
     @Autowired
@@ -35,10 +38,16 @@ public class KeywordServiceImp implements KeywordService {
         List<Keyword> keywordList = this.findAllKeywords();
         return keywordList
                 .stream()
-                .filter(keyword -> keyword
-                        .getResults()
-                        .stream()
-                        .anyMatch(result -> result.getTime().getMonthValue() == month && result.getTime().getYear() == year))
+                .map(keyword -> {
+                    List<Result> filteredResults = keyword.getResults()
+                            .stream()
+                            .filter(result -> result.getTime().getMonthValue() == month && result.getTime().getYear() == year)
+                            .collect(Collectors.toList());
+                    keyword.setResults(filteredResults);
+
+                    return keyword;
+                })
+                .filter(keyword -> !keyword.getResults().isEmpty())
                 .collect(Collectors.toList());
     }
 }
