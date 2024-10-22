@@ -4,31 +4,30 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    private int id;
+    int id;
     @OneToMany(mappedBy = "role")
     @ToString.Exclude
-    private List<User> users;
+    List<User> users;
     @NotBlank(message = "Không được để trống")
     @Size(min = 1, max = 100, message = "Tên không phù hợp")
-    private String name;
+    String name;
 
     @NotBlank(message = "Không được để trống")
     @Column(columnDefinition = "MEDIUMTEXT")
-    private String description;
+    String description;
 }

@@ -18,14 +18,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class SearchKeywordService {
+public class SearchKeywordService{
 
     @Autowired
     private CaptureService captureService;
 
     @Autowired
     private ResultServiceImp resultService;
-
 
     public String search(WebDriver driver, String http, String emlementByName, String nameKeyword) throws InterruptedException, IOException {
         driver.manage().window().maximize();
@@ -38,17 +37,4 @@ public class SearchKeywordService {
         return suggestionList;
     }
 
-    public WebDriver searchWithPC(){
-        WebDriver driver = new ChromeDriver();
-        return driver;
-    }
-
-    public WebDriver searchWithSm(){
-        ChromeOptions options = new ChromeOptions();
-        Map<String, Object> mobileEmulation = new HashMap<>();
-        mobileEmulation.put("deviceName", "Pixel 2");
-        options.setExperimentalOption("mobileEmulation", mobileEmulation);
-        WebDriver driver = new ChromeDriver(options);
-        return driver;
-    }
 }

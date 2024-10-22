@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -18,9 +21,9 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = "Không được để trống")
-    private int id;
+    int id;
     @Column(columnDefinition = "MEDIUMTEXT")
-    private String depertmentId;
+    String depertmentId;
     @NotBlank(message = "Không được để trống")
-    private String name;
+    String name;
 }

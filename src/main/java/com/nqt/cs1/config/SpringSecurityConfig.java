@@ -65,13 +65,14 @@ public class SpringSecurityConfig {
                                 new AntPathRequestMatcher("/images/**"),
                                 new AntPathRequestMatcher("/assets/**"),
                                 new AntPathRequestMatcher("/js/**"),
-                                new AntPathRequestMatcher("/user/**"),
                                 new AntPathRequestMatcher("/auth/**")).permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/**"),
                                 new AntPathRequestMatcher("/department/**"),
                                 new AntPathRequestMatcher("/infomation/**"),
+                                new AntPathRequestMatcher("/user/**"),
                                 new AntPathRequestMatcher("/employee/**")).hasRole("ADMIN")
+//                      Test với người dùng có role USER (Logic thực tế không đúng)
                         .requestMatchers(
                                 new AntPathRequestMatcher("/department/**"),
                                 new AntPathRequestMatcher("/employee/**"),

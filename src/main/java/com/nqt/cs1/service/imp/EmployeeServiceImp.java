@@ -19,14 +19,11 @@ public class EmployeeServiceImp implements EmployeeService {
     public List<Employee> getAllEmployees() {
         try {
             List<Employee> employees = employeeRepository.findAll();
-
-            // Kiểm tra nếu danh sách trả về bị null
             if (employees == null) {
                 throw new RuntimeException("No employees found.");
             }
             return employees;
         } catch (DataAccessException e) {
-            // Ném lại ngoại lệ truy vấn cơ sở dữ liệu
             throw new RuntimeException("Error accessing the database: " + e.getMessage(), e);
         }
     }

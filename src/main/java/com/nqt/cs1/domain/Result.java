@@ -15,12 +15,12 @@ import java.time.LocalDate;
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    long id;
     @Column(columnDefinition = "MEDIUMTEXT")
-    private String suggestions;
-    private LocalDate time;
-    private String image;
+    String suggestions;
+    LocalDate time;
+    String image;
     @ManyToOne
     @JoinColumn(name = "keyword_id")
-    private Keyword keyword;
+    Keyword keyword;
 }
