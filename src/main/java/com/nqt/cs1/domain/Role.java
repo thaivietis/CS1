@@ -16,13 +16,10 @@ import java.util.List;
 @Entity
 @Table(name = "roles")
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     int id;
-    @OneToMany(mappedBy = "role")
-    @ToString.Exclude
-    List<User> users;
+
     @NotBlank(message = "Không được để trống")
     @Size(min = 1, max = 100, message = "Tên không phù hợp")
     String name;
@@ -30,4 +27,8 @@ public class Role {
     @NotBlank(message = "Không được để trống")
     @Column(columnDefinition = "MEDIUMTEXT")
     String description;
+
+    @OneToMany(mappedBy = "role")
+    @ToString.Exclude
+    List<User> users;
 }

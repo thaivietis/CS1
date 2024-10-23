@@ -13,8 +13,7 @@ import java.util.List;
 @Entity
 @Table(name="keywords")
 public class Keyword {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
     String keywordSearch;
     String keywordMatch;

@@ -1,7 +1,7 @@
 package com.nqt.cs1.controller;
 
 import com.nqt.cs1.domain.Department;
-import com.nqt.cs1.service.DepartmentService;
+import com.nqt.cs1.service.imp.DepartmentServiceImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
 @Controller
 public class DepartmentController {
     @Autowired
-    private DepartmentService departmentService;
+    private DepartmentServiceImp departmentService;
 
     @GetMapping(value = "/department")
     public String getDepartment(Model model) {
@@ -55,11 +55,7 @@ public class DepartmentController {
         if(bindingResult.hasErrors()){
             return "department/update";
         }
-        Department department = this.departmentService.getDepartmentById(newDepartment.getId());
-        department.setId(newDepartment.getId());
-        department.setName(newDepartment.getName());
-        department.setDepertmentId(newDepartment.getDepertmentId());
-        this.departmentService.saveDepartment(department);
+        this.departmentService.updateDepartment(newDepartment);
         return "redirect:/department";
     }
 

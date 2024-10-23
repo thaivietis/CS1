@@ -1,6 +1,6 @@
 package com.nqt.cs1.service;
 
-import com.nqt.cs1.service.imp.UploadService;
+import com.nqt.cs1.component.UploadComponent;
 import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class UserServiceTest {
     private ServletContext servletContext;
 
     @InjectMocks
-    private UploadService uploadService;
+    private UploadComponent uploadComponent;
 
     // Khởi tạo các mock
     @BeforeEach
@@ -34,7 +34,7 @@ public class UserServiceTest {
     void testHandleSaveUploadFile_EmptyFile() {
         MultipartFile mockFile = mock(MultipartFile.class);
         when(mockFile.isEmpty()).thenReturn(true);
-        String result = uploadService.handleSaveUploadFile(mockFile, "uploads");
+        String result = uploadComponent.handleSaveUploadFile(mockFile, "uploads");
         assertEquals("Kết quả trả về phải là chuỗi rỗng khi file rỗng.", result, "");
     }
 
@@ -44,7 +44,7 @@ public class UserServiceTest {
         when(file.isEmpty()).thenReturn(false);
         when(file.getOriginalFilename()).thenReturn("test.jpg");
         when(file.getBytes()).thenReturn("Test file content".getBytes());
-        String result = uploadService.handleSaveUploadFile(file, "uploads");
+        String result = uploadComponent.handleSaveUploadFile(file, "uploads");
         assertEquals("Tên file kết thúc bằng '-test.jpg'.", result.endsWith("-test.jpg"), true);
         String rootPath = Paths.get("src", "main", "resources", "static", "images").toFile().getAbsolutePath();
         File uploadedFile = new File(rootPath + File.separator + "uploads" + File.separator + result);
@@ -57,7 +57,7 @@ public class UserServiceTest {
         when(mockFile.isEmpty()).thenReturn(false);
         when(mockFile.getOriginalFilename()).thenReturn("test.jpg");
         when(mockFile.getBytes()).thenThrow(IOException.class);
-        String result = uploadService.handleSaveUploadFile(mockFile, "uploads");
+        String result = uploadComponent.handleSaveUploadFile(mockFile, "uploads");
         assertEquals("", result, "");
     }
 }

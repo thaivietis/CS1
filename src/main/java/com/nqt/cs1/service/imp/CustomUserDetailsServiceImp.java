@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collections;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImp implements UserDetailsService {
 
     @Autowired
     private UserServiceImp userService;

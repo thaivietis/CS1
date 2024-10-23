@@ -1,10 +1,10 @@
 package com.nqt.cs1.controller;
 
+import com.nqt.cs1.component.UploadComponent;
 import com.nqt.cs1.domain.Department;
 import com.nqt.cs1.domain.Employee;
 import com.nqt.cs1.service.DepartmentService;
 import com.nqt.cs1.service.EmployeeService;
-import com.nqt.cs1.service.imp.UploadService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class EmployeeController {
     private DepartmentService departmentService;
 
     @Autowired
-    private UploadService uploadService;
+    private UploadComponent uploadComponent;
 
     @GetMapping(value = "/employee")
     public String getEmployee(Model model) {
@@ -52,7 +52,7 @@ public class EmployeeController {
             model.addAttribute("departmentList", departmentList);
             return "employee/create";
         }
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String avatar = this.uploadComponent.handleSaveUploadFile(file, "avatar");
         employee.setGender(checkGenDer(gender));
         employee.setAvatar(avatar);
         this.employeeService.saveEmployee(employee);
@@ -98,7 +98,7 @@ public class EmployeeController {
             model.addAttribute("employee", employee1);
             return "employee/update";
         }
-        String avatar = this.uploadService.handleSaveUploadFile(file, "avatar");
+        String avatar = this.uploadComponent.handleSaveUploadFile(file, "avatar");
         employee1.setId(employee.getId());
         employee1.setFullName(employee.getFullName());
         employee1.setAvatar(avatar);

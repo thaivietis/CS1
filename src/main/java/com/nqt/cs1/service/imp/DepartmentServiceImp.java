@@ -26,6 +26,14 @@ public class DepartmentServiceImp implements DepartmentService {
         return this.departmentRepository.findAll();
     }
 
+    public void updateDepartment(Department department){
+        Department currentDepartment = this.getDepartmentById(department.getId());
+        currentDepartment.setId(department.getId());
+        currentDepartment.setName(department.getName());
+        currentDepartment.setDepertmentId(department.getDepertmentId());
+        this.saveDepartment(department);
+    }
+
     public void deleteById(int id){
         this.departmentRepository.deleteById(id);
     }
