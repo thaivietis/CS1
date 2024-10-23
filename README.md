@@ -25,8 +25,8 @@
 - Y4. Chức năng hiển thị kết quả (Hình ảnh, keyword matching, thay đổi tháng) - 7h (90%)
 - Y5. Tìm kiếm keyword (Platform: Google, Yahoo) - 2h (100%)
 - Y6. Tìm kiếm keyword (Thiết bị: PC, Smartphone) - 1h (100%)
-- Y7. Lập lịch Spring schedule - 30p (100%)
+- Y7. Lập lịch Spring schedule - 1h (100%)
 
 ## Refactoring 
-- Lần 1: Cấu trúc lại các file - 2h (90%)
-- Lần 2: Tối ưu code và áp dụng nguyên lý SOLID - ...
+- Lần 1: Cấu trúc lại các file - 2h (100%)
+- Lần 2: Tối ưu code và áp dụng nguyên lý SOLID - 2h (100%)

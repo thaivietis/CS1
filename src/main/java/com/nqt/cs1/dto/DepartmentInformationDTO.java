@@ -1,17 +1,20 @@
 package com.nqt.cs1.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class DepartmentInformationDTO {
-    private String name;
-    private Long totalAchievements;
-    private Long totalDisciplinary;
-    private Long finalScore;
+    String name;
+    Long totalAchievements;
+    Long totalDisciplinary;
+    Long finalScore;
 
     public DepartmentInformationDTO(String name, Integer totalAchievements, Integer totalDisciplinary, Integer finalScore) {
         this.name = name;
